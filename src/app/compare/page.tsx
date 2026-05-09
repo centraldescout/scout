@@ -1,0 +1,3 @@
+import { players } from '@/data/mock'
+import { Radar } from '@/components/charts/radar'
+export default function ComparePage(){const left=players[0];const right=players[1];return(<div><h1 style={{fontSize:42}}>Player Comparison</h1><div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:20,marginTop:24}}><div style={{background:'#18181b',padding:24,borderRadius:18}}><h2>{left.fullName}</h2><p>{left.position} · {left.club}</p><p>Monchi Score: {left.monchiScore}</p><Radar player={left}/></div><div style={{background:'#18181b',padding:24,borderRadius:18}}><h2>{right.fullName}</h2><p>{right.position} · {right.club}</p><p>Monchi Score: {right.monchiScore}</p><Radar player={right}/></div></div></div>)}
