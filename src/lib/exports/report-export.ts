@@ -1,0 +1,2 @@
+export type ExportableScoutReport={playerName:string;summary:string;strengths:string[];weaknesses:string[];recommendation:string}
+export function buildPrintableReport(report:ExportableScoutReport){return{layout:'professional-scout-report',header:'Recruitment Department',sections:[{title:'Executive Summary',content:report.summary},{title:'Strengths',content:report.strengths.join(', ')},{title:'Weaknesses',content:report.weaknesses.join(', ')},{title:'Recommendation',content:report.recommendation}]}}
