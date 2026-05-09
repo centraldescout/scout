@@ -1,1 +1,4 @@
-export function Radar(){return(<div style={{background:'#18181b',padding:24,borderRadius:18,marginTop:24}}>Radar Placeholder</div>)}
+"use client"
+import {PolarAngleAxis,PolarGrid,PolarRadiusAxis,Radar as RechartsRadar,RadarChart,ResponsiveContainer} from 'recharts'
+import {metricRegistry} from '@/lib/metrics/metric-registry'
+export function Radar({player}:{player?:any}){const data=metricRegistry.filter(m=>m.radarEnabled).slice(0,6).map(metric=>({metric:metric.displayName,value:Number(player?.metrics?.[metric.slug]||player?.percentile||65)}));return(<div style={{background:'#18181b',padding:24,borderRadius:18,marginTop:24,border:'1px solid #27272a'}}><h3 style={{marginTop:0}}>Position Radar</h3><div style={{height:360}}><ResponsiveContainer width='100%' height='100%'><RadarChart data={data}><PolarGrid/><PolarAngleAxis dataKey='metric'/><PolarRadiusAxis angle={90} domain={[0,100]}/><RechartsRadar dataKey='value' stroke='#22c55e' fill='#22c55e' fillOpacity={0.35}/></RadarChart></ResponsiveContainer></div></div>)}
