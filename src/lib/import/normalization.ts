@@ -1,0 +1,4 @@
+import { statsBombIdentityColumns } from './statsbomb-mapping'
+export function normalizeEncoding(value:string){return value.normalize('NFKD').trim()}
+export function normalizeStatsBombRow(row:Record<string,unknown>){return{playerId:normalizeEncoding(String(row[statsBombIdentityColumns.playerId]||'')),playerName:normalizeEncoding(String(row[statsBombIdentityColumns.playerName]||'')),club:normalizeEncoding(String(row[statsBombIdentityColumns.club]||'')),competition:normalizeEncoding(String(row[statsBombIdentityColumns.competition]||'')),season:normalizeEncoding(String(row[statsBombIdentityColumns.season]||'')),minutes:Number(row[statsBombIdentityColumns.minutes]||0)}}
+export function deduplicateRows(rows:any[]){const seen=new Set<string>();return rows.filter(row=>{const key=`${row.playerId}-${row.club}-${row.competition}-${row.season}`;if(seen.has(key))return false;seen.add(key);return true})}
