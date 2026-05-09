@@ -1,0 +1,2 @@
+interface Props { player: { fullName: string; position: string; club: string; age: number } }
+export function PlayerCard({ player }: Props){return(<div style={{background:'#18181b',border:'1px solid #27272a',borderRadius:18,padding:20}}><div style={{fontSize:20,fontWeight:700}}>{player.fullName}</div><div style={{color:'#a1a1aa',marginTop:8}}>{player.position} • {player.club}</div><div style={{marginTop:10}}>Age: {player.age}</div></div>)}

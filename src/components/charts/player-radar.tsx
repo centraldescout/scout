@@ -1,0 +1,1 @@
+export function PlayerRadar(){return(<div style={{background:'#18181b',border:'1px solid #27272a',borderRadius:18,padding:24,marginTop:24}}><h3>Radar Chart</h3><div style={{height:320,display:'flex',alignItems:'center',justifyContent:'center'}}>Radar Placeholder</div></div>)}
