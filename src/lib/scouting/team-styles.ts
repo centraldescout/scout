@@ -1,0 +1,1 @@
+export const teamStyles={high_pressing:{intensity:95,buildUp:70,transition:90,blockHeight:'high'},positional_play:{intensity:75,buildUp:95,transition:65,blockHeight:'mid'},transition:{intensity:82,buildUp:55,transition:95,blockHeight:'mid'},low_block:{intensity:55,buildUp:45,transition:70,blockHeight:'low'},direct_play:{intensity:70,buildUp:40,transition:85,blockHeight:'mid'}}
