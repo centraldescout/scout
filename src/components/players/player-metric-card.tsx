@@ -1,0 +1,2 @@
+interface Props{label:string;value:string|number}
+export function PlayerMetricCard({label,value}:Props){return(<div style={{background:'#18181b',border:'1px solid #27272a',borderRadius:18,padding:20}}><div style={{color:'#a1a1aa',fontSize:13}}>{label}</div><div style={{fontSize:28,fontWeight:700,marginTop:8}}>{value}</div></div>)}
