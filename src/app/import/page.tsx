@@ -1,1 +1,2 @@
-export default function ImportPage(){return(<div><h1 style={{fontSize:42}}>Import CSV/XLSX</h1><div style={{marginTop:24,padding:48,border:'2px dashed #27272a',borderRadius:24,background:'#18181b'}}><input type='file' accept='.csv,.xlsx' /><p style={{marginTop:20,color:'#a1a1aa'}}>Mock parser enabled. Database persistence coming next.</p></div></div>)}
+import { ImportDropzone } from '@/components/import/import-dropzone'
+export default function ImportPage(){return(<div><h1 style={{fontSize:42}}>Import CSV/XLSX</h1><p style={{color:'#a1a1aa'}}>Upload scouting datasets for parsing and normalization.</p><ImportDropzone /></div>)}
