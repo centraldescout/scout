@@ -10,8 +10,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <aside style={{ width: 260, background: '#111111', padding: 24, borderRight: '1px solid #27272a' }}>
             <h2 style={{ marginTop: 0 }}>Scout Platform</h2>
             <nav style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+              <Link href="/">Home</Link>
               <Link href="/dashboard">Dashboard</Link>
               <Link href="/players">Players</Link>
+              <Link href="/monitoring">Monitoring</Link>
+              <Link href="/monchi-radar">Monchi Radar</Link>
               <Link href="/import">Import</Link>
             </nav>
           </aside>
