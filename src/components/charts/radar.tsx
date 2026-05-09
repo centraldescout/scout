@@ -1,0 +1,1 @@
+export function Radar(){return(<div style={{background:'#18181b',padding:24,borderRadius:18,marginTop:24}}>Radar Placeholder</div>)}
