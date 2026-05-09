@@ -1,0 +1,2 @@
+interface Props{position:string}
+export function PositionBadge({position}:Props){return(<span style={{padding:'6px 10px',borderRadius:999,background:'#166534',fontSize:12,fontWeight:700,color:'#dcfce7'}}>{position}</span>)}
