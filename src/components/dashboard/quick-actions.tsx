@@ -1,0 +1,3 @@
+import Link from 'next/link'
+const actions=[{href:'/players',label:'Browse Players'},{href:'/import',label:'Import Dataset'},{href:'/dashboard',label:'Open Dashboard'}]
+export function QuickActions(){return(<div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(220px,1fr))',gap:16,marginTop:28}}>{actions.map((action)=>(<Link key={action.href} href={action.href} style={{background:'#18181b',border:'1px solid #27272a',padding:20,borderRadius:18}}>{action.label}</Link>))}</div>)}
