@@ -1,0 +1,5 @@
+import Link from 'next/link'
+import { players } from '@/data/mock'
+export default function WatchlistsPage(){const shortlist=players.slice(0,6);const priority=players.slice(6,12);return(<div><h1 style={{fontSize:42}}>Watchlists</h1><p style={{color:'#a1a1aa'}}>Operational recruitment tracking and shortlist management.</p><div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:20,marginTop:24}}><div style={card}><h2>Shortlist</h2><div style={{display:'grid',gap:12}}>{shortlist.map(player=><Link key={player.id} href={`/players/${player.id}`} style={item}><strong>{player.fullName}</strong><div style={{color:'#a1a1aa'}}>{player.position} · Priority</div></Link>)}</div></div><div style={card}><h2>Priority Targets</h2><div style={{display:'grid',gap:12}}>{priority.map(player=><Link key={player.id} href={`/players/${player.id}`} style={item}><strong>{player.fullName}</strong><div style={{color:'#a1a1aa'}}>{player.club} · Immediate need</div></Link>)}</div></div></div></div>)}
+const card={background:'#18181b',padding:20,borderRadius:18,border:'1px solid #27272a'}
+const item={padding:14,borderRadius:12,background:'#09090b'}
