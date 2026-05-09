@@ -1,0 +1,1 @@
+export function SectionHeader({title,description}:{title:string;description?:string}){return(<div style={{marginBottom:24}}><h2 style={{fontSize:32,marginBottom:8}}>{title}</h2>{description&&<p style={{color:'#a1a1aa'}}>{description}</p>}</div>)}
