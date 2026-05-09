@@ -1,0 +1,4 @@
+import Link from 'next/link'
+import {findSimilarPlayers} from '@/lib/scouting/similarity'
+import {players} from '@/data/mock'
+export function SimilarPlayers({player}:{player:any}){const similar=findSimilarPlayers(player,players);return(<div style={{background:'#18181b',padding:24,borderRadius:18,border:'1px solid #27272a'}}><h3 style={{marginTop:0}}>Similar Players</h3><div style={{display:'grid',gap:12}}>{similar.map(item=><Link key={item.id} href={`/players/${item.id}`} style={{padding:14,borderRadius:14,background:'#09090b'}}><div style={{display:'flex',justifyContent:'space-between'}}><strong>{item.fullName}</strong><span>{Math.round(item.similarity*100)}%</span></div><div style={{marginTop:4,color:'#a1a1aa'}}>{item.club} · {item.position}</div></Link>)}</div></div>)}
