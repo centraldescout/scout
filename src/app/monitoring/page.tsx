@@ -1,0 +1,4 @@
+import Link from 'next/link'
+import { players } from '@/data/mock'
+const groups=['Observe','Priority','Approved','Discarded']
+export default function MonitoringPage(){return(<div><h1 style={{fontSize:42}}>Monitoring</h1><p style={{color:'#a1a1aa'}}>Scouting tracking workspace.</p><div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(260px,1fr))',gap:18,marginTop:24}}>{groups.map(group=><div key={group} style={{background:'#18181b',border:'1px solid #27272a',borderRadius:18,padding:20}}><h3>{group}</h3><div style={{display:'flex',flexDirection:'column',gap:12}}>{players.filter(p=>p.status===group).slice(0,4).map(player=><Link key={player.id} href={`/players/${player.id}`} style={{padding:14,borderRadius:14,background:'#09090b'}}><strong>{player.fullName}</strong><div style={{color:'#a1a1aa',marginTop:4}}>{player.position} · {player.club}</div></Link>)}</div></div>)}</div></div>)}
