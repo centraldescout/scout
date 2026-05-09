@@ -1,0 +1,1 @@
+export function EmptyState({title,description}:{title:string;description:string}){return(<div style={{padding:48,textAlign:'center',border:'1px dashed #27272a',borderRadius:18,color:'#a1a1aa'}}><h3>{title}</h3><p>{description}</p></div>)}
