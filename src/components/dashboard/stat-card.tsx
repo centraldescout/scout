@@ -1,0 +1,2 @@
+interface Props{label:string;value:number|string}
+export function StatCard({label,value}:Props){return(<div style={{background:'#18181b',border:'1px solid #27272a',borderRadius:18,padding:24}}><div style={{color:'#a1a1aa',fontSize:14}}>{label}</div><div style={{fontSize:36,fontWeight:700,marginTop:8}}>{value}</div></div>)}
