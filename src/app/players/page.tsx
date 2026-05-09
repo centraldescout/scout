@@ -1,14 +1,3 @@
 import { players } from '@/data/mock'
-
-export default function PlayersPage() {
-  return (
-    <main>
-      <h1>Players</h1>
-      <ul>
-        {players.map((player) => (
-          <li key={player.id}>{player.fullName}</li>
-        ))}
-      </ul>
-    </main>
-  )
-}
+import { PlayersBrowser } from '@/components/players/players-browser'
+export default function PlayersPage(){return(<div><h1 style={{fontSize:42,marginBottom:10}}>Players Database</h1><p style={{color:'#a1a1aa'}}>Professional scouting browser with filters and ranking.</p><PlayersBrowser players={players} /></div>)}
