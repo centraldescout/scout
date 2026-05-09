@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import { players } from '@/data/mock'
-const ranked=[...players].sort((a,b)=>b.monchiScore-a.monchiScore).slice(0,20)
-export default function MonchiRadarPage(){return(<div><h1 style={{fontSize:42}}>Monchi Radar</h1><p style={{color:'#a1a1aa'}}>Opportunity ranking based on mock scouting intelligence.</p><div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(260px,1fr))',gap:18,marginTop:24}}>{ranked.map(player=><Link key={player.id} href={`/players/${player.id}`} style={{background:'#18181b',border:'1px solid #27272a',borderRadius:18,padding:20}}><div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}><strong>{player.fullName}</strong><span style={{padding:'6px 10px',borderRadius:999,background:'#14532d'}}>{player.monchiScore}</span></div><p style={{color:'#a1a1aa'}}>{player.position} · {player.club}</p><div style={{marginTop:12,fontSize:14}}>Age {player.age} · €{(player.marketValue/1000000).toFixed(1)}M · {player.percentile}% percentile</div></Link>)}</div></div>)}
+import { MonchiBrowser } from '@/components/monchi/monchi-browser'
+export default function MonchiRadarPage(){return(<div><h1 style={{fontSize:42}}>Monchi Radar</h1><p style={{color:'#a1a1aa'}}>Recruitment intelligence focused on undervalued opportunities and resale potential.</p><MonchiBrowser players={players} /></div>)}
