@@ -2,10 +2,60 @@
 import Link from 'next/link'
 import {useMemo,useState} from 'react'
 import {PositionBadge} from './position-badge'
-type Player={id:string;fullName:string;position:string;club:string;age:number;rating:number;minutes:number;marketValue:number;status:string}
-export function PlayersBrowser({players}:{players:Player[]}){const[query,setQuery]=useState('');const[position,setPosition]=useState('All');const[club,setClub]=useState('All');const[sort,setSort]=useState('rating');const[view,setView]=useState('table');const positions=['All',...Array.from(new Set(players.map(p=>p.position)))];const clubs=['All',...Array.from(new Set(players.map(p=>p.club)))];const filtered=useMemo(()=>players.filter(p=>p.fullName.toLowerCase().includes(query.toLowerCase())).filter(p=>position==='All'||p.position===position).filter(p=>club==='All'||p.club===club).sort((a,b)=>Number(b[sort as keyof Player])-Number(a[sort as keyof Player])),[players,query,position,club,sort]);return <div><div style={{display:'flex',gap:12,flexWrap:'wrap',margin:'22px 0'}}><input value={query} onChange={e=>setQuery(e.target.value)} placeholder='Search by name' style={input}/><select value={position} onChange={e=>setPosition(e.target.value)} style={input}>{positions.map(v=><option key={v}>{v}</option>)}</select><select value={club} onChange={e=>setClub(e.target.value)} style={input}>{clubs.map(v=><option key={v}>{v}</option>)}</select><select value={sort} onChange={e=>setSort(e.target.value)} style={input}><option value='rating'>Rating</option><option value='age'>Age</option><option value='marketValue'>Market Value</option><option value='minutes'>Minutes</option></select><button onClick={()=>setView(view==='table'?'grid':'table')} style={button}>{view==='table'?'Grid':'Table'}</button></div>{view==='table'?<table style={{width:'100%',borderCollapse:'collapse',background:'#18181b',borderRadius:18,overflow:'hidden'}}><thead><tr><th style={th}>Player</th><th style={th}>Pos</th><th style={th}>Club</th><th style={th}>Age</th><th style={th}>Rating</th><th style={th}>Minutes</th><th style={th}>Value</th></tr></thead><tbody>{filtered.map(p=><tr key={p.id} style={{borderTop:'1px solid #27272a'}}><td style={td}><Link href={`/players/${p.id}`}>{p.fullName}</Link></td><td style={td}><PositionBadge position={p.position}/></td><td style={td}>{p.club}</td><td style={td}>{p.age}</td><td style={td}>{p.rating}</td><td style={td}>{p.minutes}</td><td style={td}>€{(p.marketValue/1000000).toFixed(1)}M</td></tr>)}</tbody></table>:<div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(240px,1fr))',gap:16}}>{filtered.map(p=><Link key={p.id} href={`/players/${p.id}`} style={card}><PositionBadge position={p.position}/><h3>{p.fullName}</h3><p style={{color:'#a1a1aa'}}>{p.club} · {p.age} yrs</p><strong>{p.rating}</strong></Link>)}</div>}</div>}
-const input={padding:12,borderRadius:12,border:'1px solid #27272a',background:'#18181b',color:'#fff'}
-const button={...input,cursor:'pointer'}
-const th={padding:14,textAlign:'left',color:'#a1a1aa'} as const
-const td={padding:14} as const
-const card={background:'#18181b',border:'1px solid #27272a',borderRadius:18,padding:20,display:'block'}
+
+type Player={id:string;fullName:string;position:string;club:string;competition:string;age:number;rating:number;minutes:number;marketValue:number|null;status:string;metrics:{obv:number;npXg:number;xa:number;pressures:number}}
+
+export function PlayersBrowser({players}:{players:Player[]}){
+const[query,setQuery]=useState('')
+const[position,setPosition]=useState('All')
+const[sort,setSort]=useState('rating')
+const positions=['All',...Array.from(new Set(players.map(p=>p.position)))]
+const filtered=useMemo(()=>players.filter(p=>p.fullName.toLowerCase().includes(query.toLowerCase())).filter(p=>position==='All'||p.position===position).sort((a,b)=>Number(b[sort as keyof Player])-Number(a[sort as keyof Player])),[players,query,position,sort])
+
+return <div style={{display:'flex',flexDirection:'column',gap:18}}>
+<div style={{display:'flex',gap:12,alignItems:'center',flexWrap:'wrap',position:'sticky',top:0,zIndex:20,background:'#09090b',padding:'12px 0'}}>
+<input value={query} onChange={e=>setQuery(e.target.value)} placeholder='Search player...' style={input}/>
+<select value={position} onChange={e=>setPosition(e.target.value)} style={input}>{positions.map(v=><option key={v}>{v}</option>)}</select>
+<select value={sort} onChange={e=>setSort(e.target.value)} style={input}><option value='rating'>Scout Rating</option><option value='age'>Age</option><option value='minutes'>Minutes</option></select>
+<div style={{marginLeft:'auto',color:'#71717a',fontSize:13}}>{filtered.length} players</div>
+</div>
+<div style={{border:'1px solid #18181b',borderRadius:20,overflow:'hidden',background:'#09090b'}}>
+<table style={{width:'100%',borderCollapse:'collapse'}}>
+<thead style={{position:'sticky',top:70,background:'#111114',zIndex:10}}>
+<tr>
+<th style={th}>Player</th>
+<th style={th}>Position</th>
+<th style={th}>Club</th>
+<th style={th}>Competition</th>
+<th style={th}>Age</th>
+<th style={th}>Rating</th>
+<th style={th}>Minutes</th>
+<th style={th}>OBV</th>
+<th style={th}>NP xG</th>
+<th style={th}>xA</th>
+</tr>
+</thead>
+<tbody>
+{filtered.slice(0,1500).map(p=><tr key={p.id} style={{borderTop:'1px solid #18181b',transition:'all .15s ease'}}>
+<td style={td}><Link href={`/players/${p.id}`} style={{display:'flex',flexDirection:'column',gap:2,textDecoration:'none'}}><strong style={{color:'#fafafa'}}>{p.fullName}</strong><span style={{fontSize:12,color:'#71717a'}}>{p.status}</span></Link></td>
+<td style={td}><PositionBadge position={p.position}/></td>
+<td style={td}>{p.club}</td>
+<td style={td}>{p.competition}</td>
+<td style={td}>{p.age}</td>
+<td style={td}><div style={rating}>{p.rating}</div></td>
+<td style={td}>{Intl.NumberFormat('en-US').format(p.minutes)}</td>
+<td style={td}><MetricBadge value={p.metrics.obv}/></td>
+<td style={td}><MetricBadge value={p.metrics.npXg}/></td>
+<td style={td}><MetricBadge value={p.metrics.xa}/></td>
+</tr>)}
+</tbody>
+</table>
+</div>
+</div>}
+
+function MetricBadge({value}:{value:number}){return <div style={{background:'rgba(34,197,94,.12)',color:'#4ade80',padding:'6px 10px',borderRadius:999,fontSize:12,fontWeight:600,width:'fit-content'}}>{value}</div>}
+
+const input={padding:'12px 14px',borderRadius:14,border:'1px solid #27272a',background:'#111114',color:'#fafafa',fontSize:14,minWidth:180}
+const th={padding:'14px 16px',textAlign:'left',fontSize:12,color:'#71717a',fontWeight:600,letterSpacing:'.04em'} as const
+const td={padding:'16px',fontSize:14,color:'#e4e4e7'} as const
+const rating={background:'rgba(59,130,246,.14)',color:'#60a5fa',padding:'6px 10px',borderRadius:999,fontWeight:700,width:'fit-content'}
