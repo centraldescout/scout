@@ -1,0 +1,7 @@
+export type RuntimePlayer={id:string;fullName:string;position:string;club:string;age:number;rating:number;minutes:number;marketValue:number;status:string}
+
+const DATASET_URL=process.env.NEXT_PUBLIC_DATASET_URL||'https://ibqxjwdkonjirkmvvxyr.supabase.co/storage/v1/object/public/datasets/statsbomb.csv'
+
+function parseCsvLine(line:string){const result=[] as string[];let current='';let inside=false;for(let i=0;i<line.length;i++){const char=line[i];if(char==='"'){inside=!inside;continue}if(char===','&&!inside){result.push(current);current='';continue}current+=char}result.push(current);return result}
+
+export async function loadRuntimePlayers():Promise<RuntimePlayer[]>{const response=await fetch(DATASET_URL,{cache:'force-cache'});if(!response.ok){throw new Error(`Dataset fetch failed: ${response.status}`)}const text=await response.text();const lines=text.split('\n').filter(Boolean);const headers=parseCsvLine(lines[0]);const idx=(name:string)=>headers.indexOf(name);return lines.slice(1,4000).map((line,index)=>{const cols=parseCsvLine(line);return{id:String(cols[idx('player_id')]||index),fullName:cols[idx('player_name_x')]||'Unknown',position:cols[idx('primary_position')]||'UNK',club:cols[idx('team_name')]||'Unknown',age:Number(cols[idx('age')])||0,rating:Number(cols[idx('obv_90')])*100||50,minutes:Number(cols[idx('total_minutes')])||0,marketValue:5000000,status:'Observed'}}).filter(player=>player.fullName!=='Unknown')}
